@@ -24,6 +24,12 @@
       for="Products.CMFPlone.interfaces.IPloneSiteRoot"
       class=".controlpanel.MemberEmailsSettingsControlPanel"
       permission="cmf.ManagePortal"
-      />  
+      />
+      
+  <subscriber
+      for="Products.CMFPlone.interfaces.IPloneSiteRoot
+           pas.plugins.memberapproval.events.IUserAddedEvent"
+      handler=".handlers.userAddedHandler"
+      />
       
 </configure>

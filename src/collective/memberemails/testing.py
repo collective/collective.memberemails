@@ -12,6 +12,14 @@ class CollectiveMemberemails(PloneSandboxLayer):
 
     def setUpZope(self, app, configurationContext):
         # Load ZCML for this package
+        import pas.plugins.memberapproval
+        xmlconfig.file('configure.zcml',
+                       pas.plugins.memberapproval,
+                       context=configurationContext)
+        import collective.memberapproval
+        xmlconfig.file('configure.zcml',
+                       collective.memberapproval,
+                       context=configurationContext)
         import collective.memberemails
         xmlconfig.file('configure.zcml',
                        collective.memberemails,

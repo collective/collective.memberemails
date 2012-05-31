@@ -30,33 +30,40 @@ class IMemberEmailsSettings(Interface):
 
     registration_email = schema.Text(
         title=_(u"Registration notification"),
-        description=_(u"The email that will be used to notify the admin. "
-                       "Valid variables are {approval_url}, {approve_url}, "
-                       "{disapprove_url}, {userinfo_url}, and any variable from the "
-                       "registration form, including {userid} and {email}."
+        description=_(u"The text that will be used to notify the admin. "
+                       "Valid variables are {portal_url}. {approval_url}, "
+                       "{approve_url}, {disapprove_url}, {userinfo_url}, and "
+                       "{userid}."
                       ), 
         required=True, 
-        default=u"",
+        default=u"A new user has registered on {portal_url}. To view the "
+                 "user information and approve or disapprove the user please "
+                 "visit {userinfo_url}",
     )
 
     approval_email = schema.Text(
         title=_(u"Approval notification"),
-        description=_(u"The email that will be used to notify the user of approval. "
-                       "Valid variables are {approval_url}, {approve_url}, "
-                       "{disapprove_url}, {userinfo_url}, and any variable from the "
+        description=_(u"The text that will be used to notify the user of "
+                       "approval. Valid variables are {portal_url}, "
+                       "{approval_url}, {approve_url}, {disapprove_url}, "
+                       "{userinfo_url}, and and any variable from the "
                        "registration form, including {userid} and {email}."
                       ), 
         required=True, 
-        default=u"",
+        default=u"Your user registration on {portal_url} has been approved. "
+                 "You can now log in with your userid, {userid} and the "
+                 "password you set when verifying your e-mail address.",
     )
 
     disapproval_email = schema.Text(
         title=_(u"Disapproval notification"),
-        description=_(u"The email that will be used to notify the user of disapproval."
-                       "Valid variables are {approval_url}, {approve_url},"
-                       "{disapprove_url}, {userinfo_url}, and any variable from the "
-                       "registration form, including {userid} and {email}"
+        description=_(u"The text that will be used to notify the user of "
+                       "disapproval. Valid variables are {portal_url}, "
+                       "{approval_url}, {approve_url}, {disapprove_url}, "
+                       "{userinfo_url}, and and any variable from the "
+                       "registration form, including {userid} and {email}."
                       ), 
         required=True, 
-        default=u"",
+        default=u"Your user registration on {portal_url} has not been approved. "
+                 "Sorry about that.",
     )
