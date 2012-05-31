@@ -48,7 +48,6 @@ class ApprovalExample(unittest.TestCase):
         self.assertTrue('not approved' in self.fakemailhost._mails[2])
         
         # Lastly delete the user
-        import pdb;pdb.set_trace()
         acl_users.userFolderDelUsers(['newuser'])
         self.assertEqual(len(self.fakemailhost._mails), 4)
         self.assertTrue('not approved' in self.fakemailhost._mails[3])
