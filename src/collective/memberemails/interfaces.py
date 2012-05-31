@@ -36,7 +36,8 @@ class IMemberEmailsSettings(Interface):
                        "{userid}."
                       ), 
         required=True, 
-        default=u"A new user has registered on {portal_url}. To view the "
+        default=u"Subject: A new user registered on {portal_url}\n\n"
+                 "A new user has registered on {portal_url}. To view the "
                  "user information and approve or disapprove the user please "
                  "visit {userinfo_url}",
     )
@@ -50,8 +51,9 @@ class IMemberEmailsSettings(Interface):
                        "registration form, including {userid} and {email}."
                       ), 
         required=True, 
-        default=u"Your user registration on {portal_url} has been approved. "
-                 "You can now log in with your userid, {userid} and the "
+        default=u"Subject: Your account at {portal_url} was approved\n\n"
+                 "Your user registration on {portal_url} has been approved. "
+                 "You can now log in with your userid ({userid}) and the "
                  "password you set when verifying your e-mail address.",
     )
 
@@ -64,6 +66,7 @@ class IMemberEmailsSettings(Interface):
                        "registration form, including {userid} and {email}."
                       ), 
         required=True, 
-        default=u"Your user registration on {portal_url} has not been approved. "
+        default=u"Subject: Your account at {portal_url} was not approved\n\n"
+                 "Your user registration on {portal_url} was not approved. "
                  "Sorry about that.",
     )

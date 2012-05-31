@@ -37,4 +37,77 @@ def userAddedHandler(site, event):
         address = site.getProperty('email_from_address')
         
     mailhost.send(email, address, site.getProperty('email_from_address'), site.getProperty('email_encoding'))
+
+def userApprovedHandler(site, event):
+    registry = getUtility(IRegistry)
+  
+    try:
+        settings = registry.forInterface(IMemberEmailsSettings)
+    except KeyError:
+        # The product is not installed
+        return
+
+    if not settings.enabled:
+        return
+        
+    data = collect_data(site, event.userid)
+    email = settings.approval_email.format(**data)
+    mailhost = getToolByName(site, 'MailHost')
     
+    acl_users = getToolByName(site, 'acl_users')
+    user = acl_users.getUser(event.userid)
+    address = user.getProperty('email')
+    if not address:
+        return
+        
+    mailhost.send(email, address, site.getProperty('email_from_address'), site.getProperty('email_encoding'))
+
+def userDisapprovedHandler(site, event):
+    registry = getUtility(IRegistry)
+  
+    try:
+        settings = registry.forInterface(IMemberEmailsSettings)
+    except KeyError:
+        # The product is not installed
+        return
+
+    if not settings.enabled:
+        return
+        
+    data = collect_data(site, event.userid)
+    email = settings.disapproval_email.format(**data)
+    mailhost = getToolByName(site, 'MailHost')
+    
+    acl_users = getToolByName(site, 'acl_users')
+    user = acl_users.getUser(event.userid)
+    address = user.getProperty('email')
+    if not address:
+        return
+        
+    mailhost.send(email, address, site.getProperty('email_from_address'), site.getProperty('email_encoding'))
+
+def userRemoveHandler(site, event):
+    """Send the disapproved email if the user is being removed, not approved and has never logged in."""
+    registry = getUtility(IRegistry)
+  
+    try:
+        settings = registry.forInterface(IMemberEmailsSettings)
+    except KeyError:
+        # The product is not installed
+        return
+
+    if not settings.enabled:
+        return
+        
+    data = collect_data(site, event.userid)
+    email = settings.disapproval_email.format(**data)
+    mailhost = getToolByName(site, 'MailHost')
+    
+    acl_users = getToolByName(site, 'acl_users')
+    user = acl_users.getUser(event.userid)
+    address = user.getProperty('email')
+    if not address:
+        return
+        
+    mailhost.send(email, address, site.getProperty('email_from_address'), site.getProperty('email_encoding'))
+                                

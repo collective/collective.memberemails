@@ -31,5 +31,23 @@
            pas.plugins.memberapproval.events.IUserAddedEvent"
       handler=".handlers.userAddedHandler"
       />
+
+  <subscriber
+      for="Products.CMFPlone.interfaces.IPloneSiteRoot
+           pas.plugins.memberapproval.events.IUserApprovedEvent"
+      handler=".handlers.userApprovedHandler"
+      />
+
+  <subscriber
+      for="Products.CMFPlone.interfaces.IPloneSiteRoot
+           pas.plugins.memberapproval.events.IUserDisapprovedEvent"
+      handler=".handlers.userDisapprovedHandler"
+      />
+
+  <subscriber
+      for="Products.CMFPlone.interfaces.IPloneSiteRoot
+           pas.plugins.memberapproval.events.IUserRemoveEvent"
+      handler=".handlers.userRemoveHandler"
+      />
       
 </configure>

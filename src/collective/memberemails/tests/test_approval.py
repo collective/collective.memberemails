@@ -30,9 +30,26 @@ class ApprovalExample(unittest.TestCase):
         """ Register a user and make sure an email is sent
         """
         acl_users = getToolByName(self.portal, 'acl_users')
-        acl_users.userFolderAddUser('newuser', 'password', ['Member'], [])
-        
+
+        acl_users.userFolderAddUser('newuser', 'password', ['Member'], [])        
+        user = acl_users.getUser('newuser')
+        user.setProperties(email='foo@bar')
+                        
         self.assertEqual(len(self.fakemailhost._mails), 1)
         self.assertTrue('newuser' in self.fakemailhost._mails[0])
         
+        acl_users.approveUser('newuser')
+        self.assertEqual(len(self.fakemailhost._mails), 2)
+        self.assertTrue('approved' in self.fakemailhost._mails[1])
+        self.assertFalse('not approved' in self.fakemailhost._mails[1])
+
+        acl_users.disapproveUser('newuser')
+        self.assertEqual(len(self.fakemailhost._mails), 3)
+        self.assertTrue('not approved' in self.fakemailhost._mails[2])
+        
+        # Lastly delete the user
         import pdb;pdb.set_trace()
+        acl_users.userFolderDelUsers(['newuser'])
+        self.assertEqual(len(self.fakemailhost._mails), 4)
+        self.assertTrue('not approved' in self.fakemailhost._mails[3])
+        
