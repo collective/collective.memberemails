@@ -88,7 +88,8 @@ def userDisapprovedHandler(site, event):
     mailhost.send(email, address, site.getProperty('email_from_address'), site.getProperty('email_encoding'))
 
 def userRemoveHandler(site, event):
-    """Send the disapproved email if the user is being removed, not approved and has never logged in."""
+    """Send the disapproved email if the user is being removed without being approved
+       or dissaproved and has never logged in."""
     registry = getUtility(IRegistry)
   
     try:
@@ -106,8 +107,10 @@ def userRemoveHandler(site, event):
     
     acl_users = getToolByName(site, 'acl_users')
     
-    if acl_users.userApproved(event.userid):
-        # The user is approved. This is therefore not a disapproval event.
+    status = acl_users.userStatus(event.userid)
+    if status is not None:
+        # The user has been approved or disapproved. This is therefore not a 
+        # disapproval event but a removal.
         # We don't send an email.
         return
     

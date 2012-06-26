@@ -4,7 +4,7 @@ Changelog
 1.0a2 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Now handles the separation between pending and disapproved statuses.
 
 
 1.0a1 (2012-05-31)
