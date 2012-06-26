@@ -49,6 +49,22 @@ class ApprovalExample(unittest.TestCase):
         
         # Lastly delete the user
         acl_users.userFolderDelUsers(['newuser'])
-        self.assertEqual(len(self.fakemailhost._mails), 4)
-        self.assertTrue('not approved' in self.fakemailhost._mails[3])
+        # There should be no additional email:
+        self.assertEqual(len(self.fakemailhost._mails), 3)
+
+    def test_register_and_delete(self):
+        """ Register a user and make sure an email is sent
+        """
+        acl_users = getToolByName(self.portal, 'acl_users')
+
+        acl_users.userFolderAddUser('newuser', 'password', ['Member'], [])        
+        user = acl_users.getUser('newuser')
+        user.setProperties(email='foo@bar')
+                        
+        self.assertEqual(len(self.fakemailhost._mails), 1)
+        self.assertTrue('newuser' in self.fakemailhost._mails[0])
         
+        # Lastly delete the user
+        acl_users.userFolderDelUsers(['newuser'])
+        self.assertEqual(len(self.fakemailhost._mails), 2)
+        self.assertTrue('not approved' in self.fakemailhost._mails[1])
