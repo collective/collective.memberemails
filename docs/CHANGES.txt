@@ -6,6 +6,8 @@ Changelog
 
 - Now handles the separation between pending and disapproved statuses.
 
+- Checking the login time was not reliable, and is no longer needed.
+
 
 1.0a1 (2012-05-31)
 ------------------

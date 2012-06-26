@@ -115,14 +115,6 @@ def userRemoveHandler(site, event):
         return
     
     user = acl_users.getUser(event.userid)
-    
-    last_login = user.getProperty('last_login_time')
-    if last_login != DateTime('2000/01/01 00:00:00 GMT+1'):
-        # This user has already been approved, and logged in, and later dissaproved.
-        # Hence, we do not send a disapproval email when deleting,
-        # it is not a disapproval, but probably deleting old users or something.
-        return
-    
     address = user.getProperty('email')
     if not address:
         return
